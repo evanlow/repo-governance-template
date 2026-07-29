@@ -1,0 +1,27 @@
+# Code Owners
+#
+# Owners listed here are automatically requested for review on matching files,
+# which is what makes the "require approvals" rule in docs/BRANCH_PROTECTION.md
+# actionable rather than a burden on contributors to remember.
+#
+# Syntax: <path pattern>  <@user or @org/team>
+# Later matching rules win, so put the most specific patterns last.
+#
+# REPLACE the placeholder below with real owners before relying on this file.
+# WARNING: GitHub silently ignores rules naming a user or team without write access,
+# so leaving @OWNER-PLACEHOLDER in place produces no error and no reviewer request.
+# Verify under Settings > Code owners after editing. See docs/BRANCH_PROTECTION.md.
+
+# Default owner for everything in the repository
+* @OWNER-PLACEHOLDER
+
+# Governance documents usually warrant a stricter owner than application code
+# /prime_directive.md            @OWNER-PLACEHOLDER
+# /PR_REVIEW_CLOSURE_POLICY.md   @OWNER-PLACEHOLDER
+# /docs/BRANCH_PROTECTION.md     @OWNER-PLACEHOLDER
+# /.github/                      @OWNER-PLACEHOLDER
+
+# Examples for application code — uncomment and adapt
+# /src/api/       @your-org/backend-team
+# /src/web/       @your-org/frontend-team
+# /migrations/    @your-org/data-team
