@@ -16,6 +16,7 @@ Pre-Commit Checklist:
 □ Full regression suite passes: .\Scripts\python.exe tests/run_all_smoke.py — X/X passed, 0 failures (Principle 1) [run via run_in_terminal — never via execution_subagent (Principle 9)]
 □ No secrets or credentials in the diff (Principle 12)
 □ Change is on a feature branch, not directly on main (Principle 13)
+□ Every open review comment has a written disposition (PR_REVIEW_CLOSURE_POLICY.md)
 
 For Backend-Only Changes:
 □ Tests added/updated for new code
@@ -313,14 +314,20 @@ Every new Python module under `app/routes/` or `app/services/` MUST have a corre
 | `app/routes/<name>.py` | `tests/smoke_<name>.py` |
 | `app/services/<name>.py` | `tests/smoke_<name>.py` |
 
-**Regression Suite Runner (Mandatory):**
+**Regression Suite Runner (Mandatory once committed):**
 ```powershell
-# Run all smoke tests in one command — use before EVERY commit
+# Windows (when tests/run_all_smoke.py exists in this repo)
 .\Scripts\python.exe tests/run_all_smoke.py
 ```
-This script auto-discovers every `tests/smoke_*.py` file, runs them, and prints a consolidated
-pass/fail count. It exits with code 1 on any failure, making it CI/CD-compatible.
-The count reported here is the authoritative number for the commit message.
+```bash
+# macOS/Linux (when tests/run_all_smoke.py exists in this repo)
+python tests/run_all_smoke.py
+```
+If `tests/run_all_smoke.py` is not yet present in the repository, treat this as bootstrap state and
+run the repository's currently available automated tests until the regression runner is added.
+When present, this script auto-discovers every `tests/smoke_*.py` file, runs them, and prints a
+consolidated pass/fail count. It exits with code 1 on any failure, making it CI/CD-compatible.
+The count reported there is the authoritative number for the commit message.
 
 **IMPORTANT — How to run this (Principle 9):**
 Always use `run_in_terminal` directly. Never delegate this command to `execution_subagent`.
@@ -1149,7 +1156,7 @@ Before writing **any** path into a command (especially for output redirection), 
 .\Scripts\python.exe tests/run_all_smoke.py 2>&1
 
 # ✅ CORRECT — if a file path is needed, use $env:TEMP (guaranteed) or project dir
-.\Scripts\python.exe tests/run_all_smoke.py *> "$env:TEMP\cdw_results.txt"
+.\Scripts\python.exe tests/run_all_smoke.py *> "$env:TEMP\smoke_test_results.txt"
 ```
 
 **Path verification before use:**
@@ -1509,9 +1516,18 @@ fix2
 - A PR should ideally change fewer than 400 lines
 - If a feature is large, split it into sequential PRs
 
+**Review Closure (Mandatory — see `PR_REVIEW_CLOSURE_POLICY.md`):**
+- Every issue comment, review submission and inline thread must carry a written disposition before merge: `Fixed in <commit>`, `No change` with rationale, `Deferred to #<issue>` with owner and priority, `Superseded by <commit or PR>`, or a clarification request
+- Silence is not a disposition; an unanswered comment blocks merge
+- Automated-reviewer findings (Copilot, Codex, CodeQL, linters) get the same treatment as human feedback
+- Blocking findings (security, privacy, migration, data integrity, production reliability) require a fix plus verification plus re-review, or documented risk acceptance by the technical owner
+- Thread status is supporting evidence only: `outdated` does not prove a fix, and `resolved` must be backed by a recorded disposition
+- Repository settings that enforce this gate are listed in `docs/BRANCH_PROTECTION.md`
+
 **❌ Never:**
 - Push directly to `main` (except for critical hotfixes with immediate retrospective)
 - Merge a PR without at least one review (for solo projects: self-review with a checklist)
+- Merge while any review comment lacks a meaningful reply or any blocking concern is open
 - Leave stale branches open for weeks — merge or delete
 - Use `git push --force` on shared branches (destroys collaborators' history)
 
@@ -3408,6 +3424,8 @@ Record the audit result in `session_log.md` as a checkpoint entry with type `aud
 
 ### Internal Documentation
 - `README.md` - Project overview
+- `PR_REVIEW_CLOSURE_POLICY.md` - Mandatory review-disposition and merge-gate policy
+- `docs/BRANCH_PROTECTION.md` - Repository settings that enforce the merge gate
 - `session_log.md` - Session-level compliance log and KPI checkpoints
 - `tests/` - Living examples of expected behavior and usage patterns
 - Test files - Living examples of correct usage
@@ -3629,10 +3647,10 @@ git commit -m "feat: implement PDF export module ✓"
 
 3. **Use standard bash commands:**
    ```bash
-   cd "/c/Users/evanl/Documents/development workspace/clearmeet"
+   cd "/c/path/to/your/repository"
    git add -A
    git commit -m "feat: add PDF export [PASS]"
-   git push origin main
+   git push origin HEAD
    ```
 
 4. **No Unicode issues** - Git Bash handles all characters correctly
@@ -3721,10 +3739,10 @@ For teams that adopt this profile, Git Bash is the required git tool for develop
 
    ```bash
    # Git Bash - Git operations (NOT PowerShell)
-   cd /c/Users/evanl/Documents/development\ workspace/clearmeet
+   cd /c/path/to/your/repository
    git add README.md
    git commit -m "docs: update audio upload security [PASS]"
-   git push origin main
+   git push origin HEAD
    ```
 
 5. **Avoid PowerShell for git operations**
@@ -3810,7 +3828,7 @@ Approved ASCII replacements ONLY:
 - 2025-11-22: Added Prime Directive Principle 0 (100% test pass requirement), historical Day 4 lessons, and deletion protocol
 - 2025-11-21: Initial creation with historical Day 3 lessons learned
 
-**Next Review:** After next major incident or quarterly (next: May 2026)
+**Next Review:** After next major incident or quarterly
 
 ---
 
