@@ -12,13 +12,13 @@ Rulesets** on newer repositories).
 | Setting | Value | Enforces |
 |---|---|---|
 | Require a pull request before merging | On | Principle 13 — never commit to `main` |
-| Require approvals | 1 or more | Principle 13 review requirement |
+| Require approvals | 1 or more (solo repos: 0) | Principle 13 review requirement |
 | Dismiss stale pull request approvals when new commits are pushed | On | Approval must apply to the final head commit |
 | Require conversation resolution before merging | On | `PR_REVIEW_CLOSURE_POLICY.md` — no unresolved threads |
 | Require status checks to pass before merging | On | Checks pass on the final head commit |
 | Require branches to be up to date before merging | On | Checks run against the real merge result |
 | Require linear history | Optional | Readable history; pairs with squash merge |
-| Do not allow bypassing the above settings | On | Prevents silent policy bypass by admins |
+| Disallow bypasses (rulesets) / Include administrators (branch rules) | On | Prevents silent policy bypass by admins |
 | Allow force pushes | Off | Principle 13 — never force-push shared branches |
 | Allow deletions | Off | Protects `main` |
 

@@ -22,7 +22,7 @@ Example:
 
 > Fixed in `abc1234`. The redirect now accepts only safe relative paths, and a regression test covers absolute external URLs.
 
-### 2. Accepted without change
+### 2. No change
 
 - Explain why the current implementation is correct or why the concern does not apply.
 - For material disagreements, obtain reviewer or designated technical-owner acknowledgement before merge.
@@ -97,9 +97,9 @@ Before merging, the person performing the merge must confirm that:
 
 > Fixed in `<commit>`. `<brief explanation>`. Validation: `<tests or evidence>`.
 
-### No change required
+### No change
 
-> No change proposed. `<technical explanation>`. `<reviewer or technical-owner acknowledgement, when material>`.
+> No change. `<technical explanation>`. `<reviewer or technical-owner acknowledgement, when material>`.
 
 ### Deferred
 
