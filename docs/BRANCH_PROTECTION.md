@@ -14,7 +14,7 @@ Rulesets** on newer repositories).
 | Require a pull request before merging | On | Principle 13 — never commit to `main` |
 | Require approvals | 1 or more | Principle 13 review requirement |
 | Dismiss stale pull request approvals when new commits are pushed | On | Approval must apply to the final head commit |
-| **Require conversation resolution before merging** | **On** | **`PR_REVIEW_CLOSURE_POLICY.md` — no unresolved threads** |
+| Require conversation resolution before merging | On | `PR_REVIEW_CLOSURE_POLICY.md` — no unresolved threads |
 | Require status checks to pass before merging | On | Checks pass on the final head commit |
 | Require branches to be up to date before merging | On | Checks run against the real merge result |
 | Require linear history | Optional | Readable history; pairs with squash merge |
@@ -22,8 +22,9 @@ Rulesets** on newer repositories).
 | Allow force pushes | Off | Principle 13 — never force-push shared branches |
 | Allow deletions | Off | Protects `main` |
 
-> "Require conversation resolution before merging" is the single most important setting for the
-> review-closure policy. Without it, the policy relies entirely on discipline.
+Every row above is required except where marked Optional. If you configure only one of them, make it
+**Require conversation resolution before merging** — it is what enforces
+`PR_REVIEW_CLOSURE_POLICY.md`. Without it, the policy relies entirely on discipline.
 
 ## Repository-level settings
 
@@ -31,8 +32,11 @@ Rulesets** on newer repositories).
   — delete merged branches).
 - **Settings → Code security:** enable secret scanning, push protection and Dependabot alerts
   (Principle 12 — never commit secrets).
-- **`.github/CODEOWNERS`:** fill in real owners so reviewers are requested automatically. A required
-  approval rule with no owners defined puts the burden on contributors to remember.
+- **`.github/CODEOWNERS`:** replace the `@OWNER-PLACEHOLDER` entry with real owners so reviewers are
+  requested automatically. GitHub **silently ignores** rules that name a user or team without write
+  access, so a leftover placeholder produces no error and no reviewer request — the file looks
+  configured while doing nothing. Confirm the fix under **Settings → Code owners**, which lists any
+  syntax or access errors, or by opening a PR and checking that the expected reviewer is requested.
 
 ## Solo projects
 
@@ -68,7 +72,8 @@ Do not assume the configuration works. Prove it once:
 - [ ] Dismiss stale approvals on new commits
 - [ ] Force pushes and deletions disabled on `main`
 - [ ] Bypass disallowed (or bypass actors explicitly documented)
-- [ ] `.github/CODEOWNERS` populated with real owners
+- [ ] `.github/CODEOWNERS` populated with real owners, and no `@OWNER-PLACEHOLDER` entry remains
+- [ ] CODEOWNERS verified to resolve (no errors under Settings → Code owners; reviewer auto-requested on a test PR)
 - [ ] Secret scanning and push protection enabled
 - [ ] Automatic head-branch deletion enabled
 - [ ] Enforcement verified with a throwaway PR and recorded in `session_log.md`

@@ -76,7 +76,12 @@ into this template.
 every internal document reference resolves to a real file and that no personal paths or secrets
 remain in the changed files.  
 **Results:** All referenced files exist; no secrets detected.  
-**Review Comments Dispositioned:** None yet — to be recorded when review feedback arrives.  
+**Review Comments Dispositioned:** 2 of 2 (automated code review).  
+- `Fixed` — `.github/CODEOWNERS` placeholder could be left in place unnoticed. Added an explicit
+  warning that GitHub silently ignores unresolvable owners, plus verification steps in
+  `docs/BRANCH_PROTECTION.md`, its setup checklist and `README.md`.  
+- `Fixed` — inconsistent bold formatting on one row of the branch-protection table. Removed the bold
+  and moved the emphasis into prose that states every row is required.  
 **Risks / Blockers:** The policy is not enforced until branch protection is configured; see
 `docs/BRANCH_PROTECTION.md`. `.github/CODEOWNERS` contains a placeholder owner and must be filled in
 before the required-approval rule is useful.  

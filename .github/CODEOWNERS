@@ -8,6 +8,9 @@
 # Later matching rules win, so put the most specific patterns last.
 #
 # REPLACE the placeholder below with real owners before relying on this file.
+# WARNING: GitHub silently ignores rules naming a user or team without write access,
+# so leaving @OWNER-PLACEHOLDER in place produces no error and no reviewer request.
+# Verify under Settings > Code owners after editing. See docs/BRANCH_PROTECTION.md.
 
 # Default owner for everything in the repository
 * @OWNER-PLACEHOLDER

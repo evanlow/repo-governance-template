@@ -41,7 +41,8 @@ Before merging:
 ## Starting a New Project From This Template
 
 1. Replace the project name and description above.
-2. Populate `.github/CODEOWNERS` with real owners.
+2. Populate `.github/CODEOWNERS` with real owners and remove the `@OWNER-PLACEHOLDER` entry; an
+   unresolvable owner is silently ignored by GitHub. Verify under **Settings → Code owners**.
 3. Configure branch protection using the checklist in `docs/BRANCH_PROTECTION.md`, and verify it
    with a throwaway PR.
 4. Replace the placeholder keys in `.env.example` with the ones your project actually needs.
